@@ -1,0 +1,2 @@
+nvim编辑器的Roselia主题
+你有为Roselia献上一切的觉悟吗
