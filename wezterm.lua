@@ -12,11 +12,53 @@ local wezterm = require 'wezterm'
     --wezterm.log_info("toast_notification 不可用")
   --end
 --end)
+local config_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf"
+local show_sticker, sticker_height, position_v, position_h
 
+-- 读取文件内容
+local lines = {}
+-- trim 函数（去除前后空白）
+local function trim(s)
+  return s:match("^%s*(.-)%s*$")
+end
 
+-- split 函数
+local function split(str, sep)
+  local result = {}
+  for s in string.gmatch(str, "([^" .. sep .. "]+)") do
+    table.insert(result, s)
+  end
+  return result
+end
+
+-- 安全读取三行
+local file = io.open(config_path, "r")
+if file then
+  for line in file:lines() do
+    table.insert(lines, trim(line))
+  end
+  file:close()
+end
+
+local show_sticker = lines[1] == "true"
+local sticker_height = lines[2] or "17%"
+local pos = split(lines[3] or "Bottom Right", " ")
+local vertical = pos[1] or "Bottom"
+local horizontal = pos[2] or "Right"
 
 return {
+
   font_size = 16.0,
+  
+font = wezterm.font_with_fallback {
+  "JetBrainsMono Nerd Font",
+  --"Noto Sans CJK SC",       -- ✅ 中文 fallback
+  --"WenQuanYi Micro Hei",    -- 适用于 Linux
+},
+
+allow_italic_fonts = true,
+warn_about_missing_glyphs = false,
+
 
 
   -- 🌹 Roselia 官方配色风格
@@ -88,11 +130,12 @@ brights = {
   enable_scroll_bar = false,
   window_close_confirmation = "NeverPrompt",
 
+
   window_background_opacity = 1,
   background = {
   {
     source = {
-      File = "/home/kaifeng/.config/wezterm/background.jpg"
+      File = os.getenv("HOME") .. "/.config/wezterm/background.jpg"
     },
     opacity = 1,
     hsb = { brightness = 0.1 },
@@ -100,15 +143,16 @@ brights = {
   },
 {
     source = {
-      File = "/home/kaifeng/my_wallpaper/meme/meme/e23628858e06988294fc31a84ca8bfd80e95d1de_raw.jpg"
+      File =  os.getenv("HOME") .. "/.config/wezterm/sticker.jpg"
     },
-    opacity = 0,
+    opacity = show_sticker and 1 or 0,
     width = "10%",
-    height = "17%",
+    attachment = "Fixed",
+    height = sticker_height,
     repeat_x = "NoRepeat",
     repeat_y = "NoRepeat",
-    vertical_align = "Bottom",
-    horizontal_align = "Center",
+    vertical_align = vertical, --Top,Middle,Bottom
+    horizontal_align = horizontal, --Left,Center,Right
   },
 },
 

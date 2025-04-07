@@ -145,7 +145,7 @@ call nvim_buf_add_highlight(buf, -1, 'RoseliaFooter', 27, 0, -1)
 endfunction
 
 function! RandomPickOnBufRead(...)  " 支持可选参数
-  let folder = expand('/home/kaifeng/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
+  let folder = expand('$HOME/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
   let files = split(globpath(folder, '*'), '\n')
   let count = len(files)
 
@@ -169,7 +169,7 @@ function! RandomPickOnBufRead(...)  " 支持可选参数
 endfunction
 
 function! RandomPickOnBufRead(...)
-  let folder = expand('/home/kaifeng/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
+  let folder = expand('$HOME/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
   let files = split(globpath(folder, '*'), '\n')
   let count = len(files)
 

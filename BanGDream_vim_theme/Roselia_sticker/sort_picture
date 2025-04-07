@@ -1,0 +1,43 @@
+#!/usr/bin/env fish
+
+# 判断参数数量
+if test (count $argv) -ne 2
+    echo "用法: rename_with_prefix.fish <目录路径> <前缀字符串>"
+    exit 1
+end
+
+set folder $argv[1]
+set prefix $argv[2]
+
+# 判断目录是否存在
+if not test -d $folder
+    echo "❌ 目录不存在：$folder"
+    exit 1
+end
+
+# 初始化计数器
+set i 1
+
+# 遍历目录中的文件（不包括子目录）
+for file in (ls -1 $folder | sort)
+    set full_path "$folder/$file"
+
+    # 如果不是文件则跳过
+    if not test -f $full_path
+        continue
+    end
+
+    # 提取扩展名（包括点号）
+    set ext (string match -r '\.[^./]*$' $file)
+
+    # 生成新文件名
+    set new_name "$prefix"_"$i""$ext"
+    set new_path "$folder/$new_name"
+
+    # 重命名文件
+    mv $full_path $new_path
+    echo "✅ $file → $new_name"
+
+    set i (math $i + 1)
+end
+

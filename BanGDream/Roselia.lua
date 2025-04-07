@@ -2,6 +2,9 @@
 _G.roselia_color_buf = nil
 _G.roselia_color_win = nil
 _G.roselia_last_hl_group = _G.roselia_last_hl_group or nil
+
+
+
 -- 显示颜色贴纸浮窗
 function _G.ShowRoseliaColor()
   local line = vim.fn.line(".")
@@ -11,25 +14,37 @@ function _G.ShowRoseliaColor()
   local fg = vim.fn.synIDattr(trans_id, "fg#")
 
   local color_to_character = {
-  ["#881188"] = "Yukina🎤",
-  ["#00aabb"] = "Sayo🎸",
-  ["#dd2200"] = "Lisa🎸",
-  ["#bbbbbb"] = "Rinko🎹",
-  ["#dd0088"] = "ako🥁",
+  ["#881188"] = "Yukina",
+  ["#00aabb"] = "Sayo",
+  ["#dd2200"] = "Lisa",
+  ["#bbbbbb"] = "Rinko",
+  ["#dd0088"] = "ako",
   ["Empty"] = "Roselia"
 }
+
+  local color_to_icon= {
+  ["#881188"] = "🎤",
+  ["#00aabb"] = "🎸",
+  ["#dd2200"] = "🎸",
+  ["#bbbbbb"] = "🎹",
+  ["#dd0088"] = "🥁",
+  ["Empty"] = "🌹"
+}
+
 
   if fg == "" then
     fg = "Empty"
 	character = "Roselia"
+	icon = "🌹"
   else
     character = color_to_character[fg] or "Roselia"
+    icon = color_to_icon[fg] or "🌹"
     fg = string.upper(fg)
   end 
 
   local msg = {
     "🎨: " .. fg,
-    "🌹: ".. character,
+    "🌹: ".. character .. icon,
   }
 
 local roselia_colors = {
@@ -62,10 +77,8 @@ local hl_group = info and info.hl
       vim.api.nvim_buf_add_highlight(_G.roselia_color_buf, -1, hl_group, 0, 6, -1)
       vim.api.nvim_buf_add_highlight(_G.roselia_color_buf, -1, hl_group, 1, 6, -1)
     end, 20)
-  end
-    return
-  end
-
+    end
+  else
   -- 新建浮窗
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, msg)
@@ -90,7 +103,81 @@ local hl_group = info and info.hl
 
   _G.roselia_color_buf = buf
   _G.roselia_color_win = win
+  end
+
+
+  -- 路径映射配置（你可以自己改）
+local base_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker"
+local target_symlink = os.getenv("HOME") .. "/.config/wezterm/sticker.jpg"
+
+-- 成员 -> 文件夹映射
+local character_to_folder = {
+  Yukina = "Yukina",
+  Sayo   = "Sayo",
+  Lisa   = "Lisa",
+  Rinko  = "Rinko",
+  ako    = "Ako"
+}
+
+
+local config_file = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf"
+-- 获取图片宽高
+local function get_image_size(path, callback)
+  vim.fn.jobstart({ "identify", "-format", "%w %h", path }, {
+    stdout_buffered = true,
+    on_stdout = function(_, data)
+      if data and data[1] then
+        local w, h = data[1]:match("(%d+)%s+(%d+)")
+        if w and h then
+          callback(tonumber(w), tonumber(h))
+        end
+      end
+    end,
+  })
 end
+
+-- 写入 sticker.conf 的第 2 行
+local function update_sticker_height(height_percent)
+  local lines = vim.fn.readfile(config_file)
+  lines[2] = string.format("%.1f%%", height_percent)
+  vim.fn.writefile(lines, config_file)
+end
+
+
+-- 如果匹配到了角色并存在对应文件夹
+if character and character_to_folder[character] then
+  local folder = base_path .. "/" .. character_to_folder[character]
+
+  -- 获取该目录下所有图片
+  local handle = io.popen('ls "' .. folder .. '"')
+  local result = handle:read("*a")
+  handle:close()
+
+  local files = {}
+  for line in string.gmatch(result, "[^\r\n]+") do
+    table.insert(files, line)
+  end
+
+  if #files > 0 then
+    -- 随机选择一张
+    math.randomseed(os.time())
+    local pick = files[math.random(#files)]
+    local img_path = folder .. "/" .. pick
+
+    -- 创建软链接
+	get_image_size(img_path, function(w, h)
+    local height_percent = (h / w) * 10 * 16 / 9
+    update_sticker_height(height_percent) end)
+    local cmd = { "ln", "-sf", img_path, target_symlink }
+    vim.loop.spawn("ln", { args = { "-sf", img_path, target_symlink } }, function() end)
+	vim.fn.jobstart({ "wezterm", "cli", "reload-config" }, { detach = true })
+  end
+end
+
+end
+
+
+
 vim.api.nvim_create_autocmd("CursorHold", {
   pattern = "*",
   callback = function()
