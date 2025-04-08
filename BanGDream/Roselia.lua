@@ -166,7 +166,13 @@ if character and character_to_folder[character] then
 
     -- 创建软链接
 	get_image_size(img_path, function(w, h)
-    local height_percent = (h / w) * 10 * 16 / 9
+	local term_width = vim.fn.winwidth(0)
+	local term_height = vim.fn.winheight(0)
+	local term_aspect_ratio = term_width / term_height
+
+	local height_percent = (h / w) * 10 * term_aspect_ratio
+
+
     update_sticker_height(height_percent) end)
     local cmd = { "ln", "-sf", img_path, target_symlink }
     vim.loop.spawn("ln", { args = { "-sf", img_path, target_symlink } }, function() end)
@@ -186,3 +192,48 @@ vim.api.nvim_create_autocmd("CursorHold", {
     end)
   end,
 })
+
+
+local M = {}
+
+-- 🌹 贴纸开关配置文件路径
+local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf")
+
+-- 🌹 切换 sticker.conf 第一行 true/false
+function M.toggle_sticker_enabled()
+  local lines = {}
+  if vim.fn.filereadable(config_file) == 1 then
+    lines = vim.fn.readfile(config_file)
+  end
+
+  -- 如果文件为空，初始化为 false
+  if #lines == 0 then
+    lines = { "false" }
+  end
+
+  -- 切换状态
+  local current = lines[1]
+  if current == "true" then
+    lines[1] = "false"
+  else
+    lines[1] = "true"
+  end
+
+  -- 写回文件
+  vim.fn.writefile(lines, config_file)
+
+  -- 🔄 刷新 wezterm 配置
+
+  -- 提示
+  vim.notify("🎭 贴纸开关切换为: " .. lines[1] .. "（已刷新 wezterm）", vim.log.levels.INFO)
+  vim.fn.jobstart({ "wezterm", "cli", "reload-config" }, { detach = true })
+end
+
+-- 🌹 绑定快捷键 <leader>n
+vim.keymap.set("n", "<leader>n", M.toggle_sticker_enabled, {
+  desc = "切换 Roselia 贴纸开关",
+  silent = true,
+})
+
+return M
+
