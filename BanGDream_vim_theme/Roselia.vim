@@ -4,18 +4,55 @@
 colorscheme industry
 hi Normal guibg=#1a1c2c guifg=#cdd6f4
 "set background=dark
-hi Normal guibg=NONE ctermbg=NONE guifg=#c8b0e3
-hi NormalNC guibg=NONE ctermbg=NONE guifg=#c8b0e3
-hi Pmenu guibg=NONE ctermbg=NONE
-hi PmenuSel guibg=NONE ctermbg=NONE
-highlight NonText guibg=NONE
-highlight EndOfBuffer guibg=NONE
+hi Normal guibg=NONE ctermbg=NONE guifg=#c8b0e3 " 正常文本
+hi CursorLine guibg=NONE " 当前行
+hi NormalNC guibg=NONE ctermbg=NONE guifg=#c8b0e3 " 非活动窗口的正常文本
+hi Pmenu guibg=NONE guifg=#c8b0e3 ctermbg=NONE " 弹出菜单
+hi PmenuSel guibg=#c8b0e3 guifg=#00AABB ctermbg=NONE " 弹出菜单选中项
+highlight CocFloating guibg=NONE guifg=#c8b0e3
+highlight CocMenuSel guibg=#881188 guifg=#DD2200 gui=bold
+set winblend=0
+highlight NonText guibg=NONE " 非文本字符
+highlight EndOfBuffer guibg=NONE " 缓冲区末尾
+
+
+" 清除已有 match
+function! s:ClearCursorLineMatch()
+  if exists('w:roselia_cursor_match_id')
+    call matchdelete(w:roselia_cursor_match_id)
+    unlet w:roselia_cursor_match_id
+  endif
+endfunction
+
+" 更新匹配区域
+function! s:UpdateCursorLineMatch()
+  call s:ClearCursorLineMatch()
+
+  let lnum = line('.')
+  let text = getline(lnum)
+  let length = strlen(text)
+
+  if length > 0
+    " 使用 matchaddpos 高亮 [行号, 起始列, 长度]
+    let w:roselia_cursor_match_id = matchaddpos('RoseliaCursorLine', [[lnum, 1, length]])
+  endif
+endfunction
+
+" 定义高亮颜色（你可以换颜色）
+highlight RoseliaCursorLine guibg=#202234
+
+" 每次移动光标都更新
+augroup RoseliaCursorLine
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call <SID>UpdateCursorLineMatch()
+  autocmd BufLeave,WinLeave * call <SID>ClearCursorLineMatch()
+augroup END
 
 
 " 🌹 Roselia 应援色代码高亮
 " Yukina
-highlight Keyword      guifg=#881188 gui=bold " 关键字，例如 if, else, for 等
-highlight Statement    guifg=#881188 " 语句，例如 return, break, continue 等
+highlight Keyword      guifg=#DD2200 gui=bold " 关键字，例如 if, else, for 等
+highlight Statement    guifg=#DD2200 " 语句，例如 return, break, continue 等
 
 " Sayo
 highlight Function     guifg=#00AABB " 函数，例如 print(), len() 等
@@ -24,19 +61,20 @@ highlight Delimiter    guifg=#00AABB " 分隔符，例如逗号, 分号, 括号�
 highlight Comment    guifg=#00AABB " 分隔符，例如逗号, 分号, 括号等
 
 " Lisa
-highlight Identifier   guifg=#DD2200 " 标识符，例如变量名、函数名等
-highlight vimAutoCmdSfxList     guifg=#DD2200
+highlight Identifier   guifg=#881188 " 标识符，例如变量名、函数名等
+highlight vimAutoCmdSfxList     guifg=#881188
+highlight Special      guifg=#881188 " 特殊字符，例如 @, #, $, %, & 等
 
 " Rinko
 highlight Type         guifg=#BBBBBB " 类型，例如 int, float, str 等
-
+highlight scalaBlock   guifg=#BBBBBB 
 " Ako
 highlight Constant     guifg=#DD0088 " 常量，例如 True, False, None 等
 highlight Number       guifg=#DD0088 " 数字，例如 1, 2.5, 3.14 等
 highlight Boolean      guifg=#DD0088 " 布尔值，例如 True, False
-"（#c8boe3）
+
+" Roselia（#c8boe3）
 highlight PreProc      guifg=#a98ad8 " 预处理指令，例如 #include, #define 等
-highlight Special      guifg=#a98ad8 " 特殊字符，例如 @, #, $, %, & 等
 highlight Todo         guifg=#a98ad8 " 待办事项，例如 TODO, FIXME 等
 highlight WarningMsg   guifg=#a98ad8 " 警告信息，例如编译器警告
 highlight vimMapRhs     guifg=#a98ad8 

@@ -4,7 +4,7 @@ echo "📦 正在安装 Roselia 主题所需依赖..."
 
 # 系统依赖
 sudo apt update
-sudo apt install -y imagemagick fish wezterm
+sudo apt install -y imagemagick fish
 
 # 检查是否安装成功
 if ! command -v identify >/dev/null; then
@@ -13,10 +13,6 @@ fi
 
 if ! command -v fish >/dev/null; then
   echo "❌ fish shell 安装失败，请手动安装"
-fi
-
-if ! command -v wezterm >/dev/null; then
-  echo "❌ wezterm 安装失败，请手动安装"
 fi
 
 INSTALL_DIR="$(pwd)"
@@ -81,7 +77,6 @@ LUA_LINE='require("BanGDream.Roselia")'
 
 echo "📝 检查 Lua 初始化文件: $LUA_INIT"
 
-# 如果已经包含目标行，则跳过
 if grep -Fxq "$LUA_LINE" "$LUA_INIT" 2>/dev/null; then
   echo "✅ init.lua 已包含 BanGDream.Roselia，跳过插入"
 else
@@ -91,17 +86,15 @@ else
   echo "✅ 插入完成"
 fi
 
-
 echo "🖼️ 正在设置初始背景图和贴纸..."
 
-INSTALL_DIR="$(pwd)"  # 安装目录
+INSTALL_DIR="$(pwd)"
 WEZTERM_DIR="$HOME/.config/wezterm"
 mkdir -p "$WEZTERM_DIR"
 
 # 设置背景图链接
-BACKGROUND_DIR="$INSTALL_DIR/nvim/themes/BanGDream_vim_theme/Roselia_background"
+BACKGROUND_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia_background"
 BACKGROUND_TARGET="$WEZTERM_DIR/background.jpg"
-
 FIRST_BG=$(find "$BACKGROUND_DIR" -type f | sort | head -n 1)
 
 if [ -n "$FIRST_BG" ]; then
@@ -112,9 +105,8 @@ else
 fi
 
 # 设置贴纸链接
-STICKER_DIR="$INSTALL_DIR/nvim/themes/BanGDream_vim_theme/Roselia_sticker/Ako"
+STICKER_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia_sticker/Ako"
 STICKER_TARGET="$WEZTERM_DIR/sticker.jpg"
-
 FIRST_STICKER=$(find "$STICKER_DIR" -type f | sort | head -n 1)
 
 if [ -n "$FIRST_STICKER" ]; then
@@ -122,6 +114,46 @@ if [ -n "$FIRST_STICKER" ]; then
   echo "✅ 已链接贴纸图到: $(basename "$FIRST_STICKER")"
 else
   echo "❌ 未找到贴纸图文件夹内容: $STICKER_DIR"
+fi
+
+echo "🌐 正在下载安装 WezTerm AppImage..."
+
+APPIMAGE_URL="https://github.com/wez/wezterm/releases/latest/download/WezTerm-linux-x86_64.AppImage"
+APPIMAGE_PATH="$HOME/Downloads/WezTerm-linux-x86_64.AppImage"
+LOCAL_BIN="$HOME/.local/bin"
+WEZTERM_LINK="$LOCAL_BIN/wezterm"
+
+mkdir -p "$LOCAL_BIN"
+
+# 下载 AppImage（如未存在）
+if [ -f "$APPIMAGE_PATH" ]; then
+  echo "📦 AppImage 已存在，跳过下载"
+else
+  wget -O "$APPIMAGE_PATH" "$APPIMAGE_URL" || {
+    echo "❌ 下载失败，请检查网络连接"
+    exit 1
+  }
+fi
+
+chmod +x "$APPIMAGE_PATH"
+ln -sf "$APPIMAGE_PATH" "$WEZTERM_LINK"
+echo "✅ WezTerm AppImage 安装完成，命令: wezterm"
+
+# 检查 PATH
+if ! echo "$PATH" | grep -q "$LOCAL_BIN"; then
+  echo "🔧 未检测到 ~/.local/bin 在 PATH 中，尝试写入 ~/.bashrc"
+  if ! grep -q "$LOCAL_BIN" "$HOME/.bashrc"; then
+    echo "export PATH=\"$LOCAL_BIN:\$PATH\"" >> "$HOME/.bashrc"
+    echo "✅ 已将 ~/.local/bin 添加至 PATH"
+  fi
+  export PATH="$LOCAL_BIN:$PATH"
+fi
+
+# 验证
+if "$WEZTERM_LINK" --version >/dev/null 2>&1; then
+  echo "🧪 WezTerm 版本: $($WEZTERM_LINK --version)"
+else
+  echo "❌ wezterm 执行失败，AppImage 可能有问题"
 fi
 
 mkdir -p ~/.local/share/fonts
@@ -138,60 +170,3 @@ else
   echo "❌ 下载的 JetBrainsMono.zip 不是有效的 zip 文件，请检查网络或链接"
   rm -f JetBrainsMono.zip
 fi
-
-echo "🌐 正在安装 WezTerm 终端..."
-
-# 安装 WezTerm（适用于 Debian/Ubuntu 12 或以上版本）
-WEZTERM_DEB="WezTerm-debian12.deb"
-WEZTERM_URL="https://github.com/wez/wezterm/releases/latest/download/$WEZTERM_DEB"
-
-# 下载 .deb 包
-wget -O "$WEZTERM_DEB" "$WEZTERM_URL"
-
-# 安装 .deb 包
-if sudo apt install -y ./"$WEZTERM_DEB"; then
-  echo "✅ WezTerm 安装成功"
-  rm -f "$WEZTERM_DEB"
-else
-  echo "❌ WezTerm 安装失败，请检查网络或系统版本"
-fi
-
-
-echo "🛠️ 尝试设置 wezterm 为默认终端..."
-
-# 检查 wezterm 是否已安装
-if command -v wezterm >/dev/null 2>&1; then
-
-  # 创建 wezterm.desktop 文件（如果它还没有注册）
-  DESKTOP_FILE="$HOME/.local/share/applications/org.wezfurlong.wezterm.desktop"
-
-  if [ ! -f "$DESKTOP_FILE" ]; then
-    echo "📄 注册 wezterm.desktop 到本地应用目录"
-
-    mkdir -p "$(dirname "$DESKTOP_FILE")"
-
-    cat > "$DESKTOP_FILE" <<EOF
-[Desktop Entry]
-Name=WezTerm
-Comment=GPU-accelerated terminal emulator
-Exec=wezterm
-Terminal=false
-Type=Application
-Categories=System;TerminalEmulator;
-Icon=utilities-terminal
-StartupNotify=true
-EOF
-
-    update-desktop-database ~/.local/share/applications
-  fi
-
-  # 设置默认 x-terminal-emulator（仅适用于 Ubuntu/Debian）
-  sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/wezterm 100
-
-  sudo update-alternatives --set x-terminal-emulator /usr/bin/wezterm
-
-  echo "✅ 已设置 wezterm 为默认终端 (x-terminal-emulator)"
-else
-  echo "❌ wezterm 未安装，无法设置为默认终端"
-fi
-
