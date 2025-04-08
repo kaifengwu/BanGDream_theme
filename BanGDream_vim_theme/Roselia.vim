@@ -14,8 +14,8 @@ highlight EndOfBuffer guibg=NONE
 
 " 🌹 Roselia 应援色代码高亮
 " Yukina
-highlight Keyword      guifg=#881188 gui=bold " 关键字，例如 if, else, for 等
-highlight Statement    guifg=#881188 " 语句，例如 return, break, continue 等
+highlight Keyword      guifg=#DD2200 gui=bold " 关键字，例如 if, else, for 等
+highlight Statement    guifg=#DD2200 " 语句，例如 return, break, continue 等
 
 " Sayo
 highlight Function     guifg=#00AABB " 函数，例如 print(), len() 等
@@ -24,19 +24,20 @@ highlight Delimiter    guifg=#00AABB " 分隔符，例如逗号, 分号, 括号�
 highlight Comment    guifg=#00AABB " 分隔符，例如逗号, 分号, 括号等
 
 " Lisa
-highlight Identifier   guifg=#DD2200 " 标识符，例如变量名、函数名等
-highlight vimAutoCmdSfxList     guifg=#DD2200
+highlight Identifier   guifg=#881188 " 标识符，例如变量名、函数名等
+highlight vimAutoCmdSfxList     guifg=#881188
+highlight Special      guifg=#881188 " 特殊字符，例如 @, #, $, %, & 等
 
 " Rinko
 highlight Type         guifg=#BBBBBB " 类型，例如 int, float, str 等
-
+highlight scalaBlock   guifg=#BBBBBB 
 " Ako
 highlight Constant     guifg=#DD0088 " 常量，例如 True, False, None 等
 highlight Number       guifg=#DD0088 " 数字，例如 1, 2.5, 3.14 等
 highlight Boolean      guifg=#DD0088 " 布尔值，例如 True, False
-"（#c8boe3）
+
+" Roselia（#c8boe3）
 highlight PreProc      guifg=#a98ad8 " 预处理指令，例如 #include, #define 等
-highlight Special      guifg=#a98ad8 " 特殊字符，例如 @, #, $, %, & 等
 highlight Todo         guifg=#a98ad8 " 待办事项，例如 TODO, FIXME 等
 highlight WarningMsg   guifg=#a98ad8 " 警告信息，例如编译器警告
 highlight vimMapRhs     guifg=#a98ad8 

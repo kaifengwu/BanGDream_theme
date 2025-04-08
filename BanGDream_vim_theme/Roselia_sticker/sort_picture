@@ -15,26 +15,43 @@ if not test -d $folder
     exit 1
 end
 
-# 初始化计数器
-set i 1
+# 查找已命名文件中最大的编号
+set max_index 0
+for file in (ls -1 $folder)
+    set base "$prefix"_    # 单独拼接，避免正则里的 $
+    set pattern "^"$base"[0-9]+\\.[^./]+"
+    if string match -rq $pattern $file
+        set num (string replace -r "^$base" "" -- $file | string replace -r '\\..*' '')
+        if test "$num" -gt "$max_index"
+            set max_index $num
+        end
+    end
+end
 
-# 遍历目录中的文件（不包括子目录）
+# 从最大编号开始 +1
+set i (math $max_index + 1)
+
+# 遍历未命名文件
 for file in (ls -1 $folder | sort)
     set full_path "$folder/$file"
 
-    # 如果不是文件则跳过
     if not test -f $full_path
         continue
     end
 
-    # 提取扩展名（包括点号）
+    set base "$prefix"_
+    set pattern "^"$base"[0-9]+\\.[^./]+"
+    if string match -rq $pattern $file
+		echo "jump $file"
+        continue
+    end
+
+    # 提取扩展名
     set ext (string match -r '\.[^./]*$' $file)
 
-    # 生成新文件名
     set new_name "$prefix"_"$i""$ext"
     set new_path "$folder/$new_name"
 
-    # 重命名文件
     mv $full_path $new_path
     echo "✅ $file → $new_name"
 

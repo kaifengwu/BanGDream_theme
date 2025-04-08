@@ -137,16 +137,17 @@ brights = {
       File = os.getenv("HOME") .. "/.config/wezterm/background.jpg"
     },
     opacity = 1,
-    hsb = { brightness = 0.1 },
+    hsb = { brightness = 0.05 },
     attachment = "Fixed"
   },
 {
     source = {
       File =  os.getenv("HOME") .. "/.config/wezterm/sticker.jpg"
     },
-    opacity = show_sticker and 1 or 0,
-    width = "10%",
+    opacity = (show_sticker and 1 or 0) * 0.9,
+    width = "300px",
     attachment = "Fixed",
+    hsb = { brightness = 1 },
     height = sticker_height,
     repeat_x = "NoRepeat",
     repeat_y = "NoRepeat",
