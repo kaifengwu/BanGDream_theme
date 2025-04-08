@@ -56,7 +56,6 @@ font = wezterm.font_with_fallback {
   --"WenQuanYi Micro Hei",    -- 适用于 Linux
 },
 
-allow_italic_fonts = true,
 warn_about_missing_glyphs = false,
 
 
@@ -87,10 +86,10 @@ brights = {
       "#DD2200", -- 红：莉莎
       "#00AABB", -- 绿：纱夜
       "#DD0088", -- 黄：亚子（近粉）
-      "#3344AA", -- 蓝：Roselia
       "#AA44CC", -- 紫：友希那
-      "#66B2FF", -- 蓝：辅助高亮
+      "#3344AA", -- 蓝：Roselia
       "#BBBBBB", -- 青：燐子
+      "#66B2FF", -- 蓝：辅助高亮
     },
  
     --brights = {
