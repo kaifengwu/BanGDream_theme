@@ -12,7 +12,7 @@ local wezterm = require 'wezterm'
     --wezterm.log_info("toast_notification 不可用")
   --end
 --end)
-local config_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker/sticker.conf"
+local config_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/sticker.conf"
 local show_sticker, sticker_height, position_v, position_h
 
 -- 读取文件内容
