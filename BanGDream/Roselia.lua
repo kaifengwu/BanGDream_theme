@@ -105,7 +105,7 @@ function _G.ShowRoseliaColor()
 		return
 	end
 
-	local base_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker"
+	local base_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker"
 	local target_symlink = os.getenv("HOME") .. "/.config/wezterm/sticker.jpg"
 
 	local character_to_folder = {
@@ -116,7 +116,7 @@ function _G.ShowRoseliaColor()
 		ako = "Ako"
 	}
 
-	local config_file = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf"
+	local config_file = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker/sticker.conf"
 
 	local function get_image_size(path, callback)
 		vim.fn.jobstart({ "identify", "-format", "%w %h", path }, {
@@ -181,7 +181,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 -- 🌹 贴纸开关切换模块
 local M = {}
 
-local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf")
+local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker/sticker.conf")
 
 do
 	local init_lines = vim.fn.readfile(config_file)
@@ -255,7 +255,7 @@ end, {
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()
-		local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/Roselia_sticker/sticker.conf")
+		local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker/sticker.conf")
 		local lines = vim.fn.readfile(config_file)
 		if #lines == 0 then
 			lines = { "false" }

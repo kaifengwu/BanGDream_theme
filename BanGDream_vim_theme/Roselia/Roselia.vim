@@ -207,7 +207,7 @@ function! RandomPickOnBufRead(...)  " 支持可选参数
 endfunction
 
 function! RandomPickOnBufRead(...)
-  let folder = expand('$HOME/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
+  let folder = expand('$HOME/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_background')
   let files = split(globpath(folder, '*'), '\n')
   let count = len(files)
 

@@ -53,7 +53,7 @@ echo "📝 准备将 Roselia 主题指令写入 $INIT_VIM"
 # 要插入的配置内容
 read -r -d '' ROSALIA_CONFIG << 'EOF'
 " 主题设置
-command! RoseliaTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Roselia.vim
+command! RoseliaTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia.vim
 command! PoppinPartyTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Poppin.vim
 autocmd VimEnter * RoseliaTheme
 autocmd VimEnter * call DisplayRoseliaLogo()
@@ -93,7 +93,7 @@ WEZTERM_DIR="$HOME/.config/wezterm"
 mkdir -p "$WEZTERM_DIR"
 
 # 设置背景图链接
-BACKGROUND_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia_background"
+BACKGROUND_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia/Roselia_background"
 BACKGROUND_TARGET="$WEZTERM_DIR/background.jpg"
 FIRST_BG=$(find "$BACKGROUND_DIR" -type f | sort | head -n 1)
 
@@ -105,7 +105,7 @@ else
 fi
 
 # 设置贴纸链接
-STICKER_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia_sticker/Ako"
+STICKER_DIR="$INSTALL_DIR/BanGDream_vim_theme/Roselia/Roselia_sticker/Ako"
 STICKER_TARGET="$WEZTERM_DIR/sticker.jpg"
 FIRST_STICKER=$(find "$STICKER_DIR" -type f | sort | head -n 1)
 
