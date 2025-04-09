@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "📦 正在安装 Roselia 主题所需依赖..."
+echo "📦 正在安装 BanGDream 主题所需依赖..."
 
 # 系统依赖
 sudo apt update
@@ -48,41 +48,39 @@ echo "🎉 所有配置链接已完成。"
 
 INIT_VIM="$HOME/.config/nvim/init.vim"
 
-echo "📝 准备将 Roselia 主题指令写入 $INIT_VIM"
+echo "📝 准备将 BanGDream 主题指令写入 $INIT_VIM"
 
 # 要插入的配置内容
 read -r -d '' ROSALIA_CONFIG << 'EOF'
-" 主题设置
+" 🌙 加载 BanGDream Lua 模块
+lua require("BanGDream.Roselia")
+"lua require("BanGDream.Poppin")
+
+
+"Roselia
 command! RoseliaTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia.vim
-command! PoppinPartyTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Poppin.vim
 autocmd VimEnter * RoseliaTheme
 autocmd VimEnter * call DisplayRoseliaLogo()
+
+"Poppin'Party
+"command! PoppinPartyTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Poppin/Poppin.vim
+"autocmd VimEnter * PoppinPartyTheme 
+"autocmd VimEnter * call DisplayPoppinLogo()
+
+
+" 主题设置
 autocmd VimEnter * call RandomPickOnBufRead()
 autocmd VimLeavePre * call RandomPickOnBufRead(1)
 nnoremap <leader>c :call RandomPickOnBufRead(2)<CR>
 EOF
 
 # 检查是否已存在这些内容（用关键词判断）
-if grep -q "RoseliaTheme" "$INIT_VIM"; then
-  echo "✅ init.vim 中已包含 Roselia 配置，跳过插入"
+if grep -q "BanGDream_Config" "$INIT_VIM"; then
+  echo "✅ init.vim 中已包含 BanGDream 配置，跳过插入"
 else
-  echo "🔧 插入 Roselia 配置到 $INIT_VIM"
+  echo "🔧 插入 BanGDream 配置到 $INIT_VIM"
   mkdir -p "$(dirname "$INIT_VIM")"
   echo "$ROSALIA_CONFIG" >> "$INIT_VIM"
-  echo "✅ 插入完成"
-fi
-
-LUA_INIT="$HOME/.config/nvim/lua/init.lua"
-LUA_LINE='require("BanGDream.Roselia")'
-
-echo "📝 检查 Lua 初始化文件: $LUA_INIT"
-
-if grep -Fxq "$LUA_LINE" "$LUA_INIT" 2>/dev/null; then
-  echo "✅ init.lua 已包含 BanGDream.Roselia，跳过插入"
-else
-  echo "🔧 插入 require 行到 init.lua"
-  mkdir -p "$(dirname "$LUA_INIT")"
-  echo "$LUA_LINE" >> "$LUA_INIT"
   echo "✅ 插入完成"
 fi
 

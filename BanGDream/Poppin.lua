@@ -1,10 +1,10 @@
 -- 浮窗持久缓存
-_G.roselia_color_buf = nil
-_G.roselia_color_win = nil
-_G.roselia_last_hl_group = _G.roselia_last_hl_group or nil
+_G.poppin_color_buf = nil
+_G.poppin_color_win = nil
+_G.poppin_last_hl_group = _G.poppin_last_hl_group or nil
 
 -- 显示颜色贴纸浮窗
-function _G.ShowRoseliaColor()
+function _G.ShowPoppinColor()
 	local line = vim.fn.line(".")
 	local col = vim.fn.col(".")
 	local syn_id = vim.fn.synID(line, col, 1)
@@ -13,66 +13,66 @@ function _G.ShowRoseliaColor()
 	fg = string.upper(fg)
 
 	local color_to_character = {
-		["#881188"] = "Yukina",
-		["#00AABB"] = "Sayo",
-		["#DD2200"] = "Lisa",
-		["#BBBBBB"] = "Rinko",
-		["#DD0088"] = "Ako",
-		["Empty"] = "Roselia"
+		["#FF5522"] = "Kasumi",
+		["#0077DD"] = "Otae",
+		["#FF55BB"] = "Rimi",
+		["#AA66DD"] = "Arisa",
+		["#FFCC11"] = "Saaya",
+		["Empty"] = "Poppin\'Party"
 	}
 
 	local color_to_icon = {
-		["#881188"] = "🎤",
-		["#00AABB"] = "🎸",
-		["#DD2200"] = "🎸",
-		["#BBBBBB"] = "🎹",
-		["#DD0088"] = "🥁",
-		["Empty"] = "🌹"
+		["#FF5522"] = "🎤",
+		["#0077DD"] = "🎸",
+		["#FF55BB"] = "🎸",
+		["#AA66DD"] = "🎹",
+		["#FFCC11"] = "🥁",
+		["Empty"] = "⭐"
 	}
 
 	if fg == "" then
 		fg = "Empty"
-		character = "Roselia"
-		icon = "🌹"
+		character = "Poppin\'Party"
+		icon = "⭐"
 	else
-		character = color_to_character[fg] or "Roselia"
-		icon = color_to_icon[fg] or "🌹"
+		character = color_to_character[fg] or "Poppin\'Party"
+		icon = color_to_icon[fg] or "⭐"
 	end
 
 	local msg = {
 		"🎨: " .. fg,
-		"🌹: " .. character .. icon,
+		"⭐: " .. character .. icon,
 	}
 
-	local roselia_colors = {
-		["#881188"] = { name = "Yukina", hl = "RoseliaYukina", hex = "#881188" },
-		["#00AABB"] = { name = "Sayo", hl = "RoseliaSayo", hex = "#00AABB" },
-		["#DD2200"] = { name = "Lisa", hl = "RoseliaLisa", hex = "#DD2200" },
-		["#BBBBBB"] = { name = "Rinko", hl = "RoseliaRinko", hex = "#BBBBBB" },
-		["#DD0088"] = { name = "Ako", hl = "RoseliaAko", hex = "#DD0088" },
-		["#A98AD8"] = { name = "Roselia", hl = "Roselia", hex = "#A98AD8" },
+	local poppin_colors = {
+		["#FF5522"] = { name = "Kasumi", hl = "PoppinKasumi", hex = "#FF5522" },
+		["#0077DD"] = { name = "Otae", hl = "PoppinOtae", hex = "#0077DD" },
+		["#FF55BB"] = { name = "Rimi", hl = "PoppinRimi", hex = "#FF55BB" },
+		["#AA66DD"] = { name = "Arisa", hl = "PoppinArisa", hex = "#AA66DD" },
+		["#FFCC11"] = { name = "Saaya", hl = "PoppinSaaya", hex = "#FFCC11" },
+		["#FF3377"] = { name = "Poppin", hl = "Poppin", hex = "#FF3377" },
 	}
 
-	for _, info in pairs(roselia_colors) do
+	for _, info in pairs(poppin_colors) do
 		vim.cmd(string.format("highlight! %s guifg=%s gui=bold", info.hl, info.hex))
 	end
 
-	local info = roselia_colors[fg]
+	local info = poppin_colors[fg]
 	local hl_group = info and info.hl
 
-	if hl_group == _G.roselia_last_hl_group then
+	if hl_group == _G.poppin_last_hl_group then
 		return
 	end
-	_G.roselia_last_hl_group = hl_group
+	_G.poppin_last_hl_group = hl_group
 
-	if _G.roselia_color_buf and vim.api.nvim_buf_is_valid(_G.roselia_color_buf)
-		and _G.roselia_color_win and vim.api.nvim_win_is_valid(_G.roselia_color_win) then
-		vim.api.nvim_buf_set_lines(_G.roselia_color_buf, 0, -1, false, msg)
+	if _G.poppin_color_buf and vim.api.nvim_buf_is_valid(_G.poppin_color_buf)
+		and _G.poppin_color_win and vim.api.nvim_win_is_valid(_G.poppin_color_win) then
+		vim.api.nvim_buf_set_lines(_G.poppin_color_buf, 0, -1, false, msg)
 
 		if hl_group then
 			vim.defer_fn(function()
-				vim.api.nvim_buf_add_highlight(_G.roselia_color_buf, -1, hl_group, 0, 6, -1)
-				vim.api.nvim_buf_add_highlight(_G.roselia_color_buf, -1, hl_group, 1, 6, -1)
+				vim.api.nvim_buf_add_highlight(_G.poppin_color_buf, -1, hl_group, 0, 6, -1)
+				vim.api.nvim_buf_add_highlight(_G.poppin_color_buf, -1, hl_group, 1, 2, -1)
 			end, 20)
 		end
 	else
@@ -83,8 +83,8 @@ function _G.ShowRoseliaColor()
 			relative = "editor",
 			anchor = "NE",
 			row = 0,
-			col = vim.o.columns - 18,
-			width = vim.fn.strdisplaywidth(msg[1]) + 4,
+			col = vim.o.columns - 23,
+			width = vim.fn.strdisplaywidth(msg[2]) + 8,
 			height = #msg,
 			border = "none",
 			style = "minimal",
@@ -94,27 +94,29 @@ function _G.ShowRoseliaColor()
 
 		if hl_group then
 			vim.api.nvim_buf_add_highlight(buf, -1, hl_group, 0, 6, -1)
-			vim.api.nvim_buf_add_highlight(buf, -1, hl_group, 1, 6, -1)
+			vim.api.nvim_buf_add_highlight(buf, -1, hl_group, 1, 2, -1)
 		end
 
-		_G.roselia_color_buf = buf
-		_G.roselia_color_win = win
+		_G.poppin_color_buf = buf
+		_G.poppin_color_win = win
 	end
 
-	if not _G.roselia_sticker_enabled then
+	if not _G.poppin_sticker_enabled then
 		return
 	end
 
-	local base_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia_sticker"
+	local base_path = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/Poppin/Poppin_sticker"
 	local target_symlink = os.getenv("HOME") .. "/.config/wezterm/sticker.jpg"
 
 	local character_to_folder = {
-		Yukina = "Yukina",
-		Sayo = "Sayo",
-		Lisa = "Lisa",
-		Rinko = "Rinko",
-		Ako = "Ako"
-	}
+		Kasumi = "Kasumi",
+		Otae = "Otae",
+		Rimi = "Rimi",
+		Arisa = "Arisa",
+		Saaya = "Saaya",
+		["Poppin'Party"] = "Poppin"
+}
+
 
 	local config_file = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/sticker.conf"
 
@@ -173,12 +175,12 @@ vim.api.nvim_create_autocmd("CursorHold", {
 	pattern = "*",
 	callback = function()
 		vim.schedule(function()
-			_G.ShowRoseliaColor()
+			_G.ShowPoppinColor()
 		end)
 	end,
 })
 
--- 🌹 贴纸开关切换模块
+-- ⭐ 贴纸开关切换模块
 local M = {}
 
 local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/sticker.conf")
@@ -186,9 +188,9 @@ local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/sti
 do
 	local init_lines = vim.fn.readfile(config_file)
 	if #init_lines > 0 and init_lines[1] == "true" then
-		_G.roselia_sticker_enabled = true
+		_G.poppin_sticker_enabled = true
 	else
-		_G.roselia_sticker_enabled = false
+		_G.poppin_sticker_enabled = false
 	end
 end
 
@@ -207,10 +209,10 @@ function M.toggle_sticker_enabled()
 
 	if current == "true" then
 		lines[1] = "false"
-		_G.roselia_sticker_enabled = false
+		_G.poppin_sticker_enabled = false
 	else
 		lines[1] = "true"
-		_G.roselia_sticker_enabled = true
+		_G.poppin_sticker_enabled = true
 		switched = true
 	end
 
@@ -249,7 +251,7 @@ vim.keymap.set("n", "<leader>n", function()
 		vim.fn.jobstart({ "wezterm", "cli", "reload-config", "--config-file", vim.fn.expand("~/.config/wezterm/wezterm.lua") }, { detach = true })
 	end, 50)
 end, {
-	desc = "切换 Roselia 贴纸开关 + 刷新 wezterm",
+	desc = "切换 Poppin 贴纸开关 + 刷新 wezterm",
 	silent = true,
 })
 

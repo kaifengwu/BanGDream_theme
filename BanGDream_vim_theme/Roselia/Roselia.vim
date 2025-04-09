@@ -74,13 +74,13 @@ highlight Number       guifg=#DD0088 " 数字，例如 1, 2.5, 3.14 等
 highlight Boolean      guifg=#DD0088 " 布尔值，例如 True, False
 
 " Roselia（#c8boe3）
-highlight PreProc      guifg=#a98ad8 " 预处理指令，例如 #include, #define 等
-highlight Todo         guifg=#a98ad8 " 待办事项，例如 TODO, FIXME 等
-highlight WarningMsg   guifg=#a98ad8 " 警告信息，例如编译器警告
-highlight vimMapRhs     guifg=#a98ad8 
-highlight vimMaplhs     guifg=#a98ad8 
-highlight vimUsrCmd     guifg=#a98ad8 
-highlight vimSetEqual   guifg=#a98ad8 
+highlight PreProc      guifg=#A98AD8 " 预处理指令，例如 #include, #define 等
+highlight Todo         guifg=#A98AD8 " 待办事项，例如 TODO, FIXME 等
+highlight WarningMsg   guifg=#A98AD8 " 警告信息，例如编译器警告
+highlight vimMapRhs     guifg=#A98AD8 
+highlight vimMaplhs     guifg=#A98AD8 
+highlight vimUsrCmd     guifg=#A98AD8 
+highlight vimSetEqual   guifg=#A98AD8 
 
 
 highlight TSDelimiter    guifg=#66ff66 " 语法树分隔符，例如逗号, 分号, 括号等
@@ -99,8 +99,9 @@ function! DisplayRoseliaLogo()
         \ "								今井 リサ    湊 友希那		氷川 紗夜",
 		\ "								   🎸			🎤				🎸",
         \ "							════════════════════════════════════════════",
-        \ "								Welcome to the world of Roselia! 🌹",
+        \ "							   🌹 Welcome to the world of Roselia! 🌹",
 		\ "								写代码也要拼尽全力，这才是Roselia!",
+        \ "",
         \ "                              :xo...,.......dO'.....''',;,,,,,,xKd'",
         \ "                           .....';,.        .       .;ckl      .',;;;;'",
         \ "                  ..''..,..    .l.               .dXKkdx0Kc           ;:cc;.          .",
@@ -118,7 +119,7 @@ function! DisplayRoseliaLogo()
         \ "    .;..     .oNNl      .0W0.  ;x;cW0.  .;0xc    xWll.:WK'   .cl. oWl ;o.,Wk .l'.NW:   cNN. .",
         \ "     .:ollodkko;.        .lO0xd:   ;k0Okxl. .c::oOx,   :k0Oxdl.   .O0d,  ,WXd:   'k00xc.:Kkc",
         \ "",
-        \ "				═══════════════════════════════════════════════════════════════════════════",
+        \ "",
         \ ]
 
   call nvim_buf_set_lines(buf, 0, -1, v:false, lines)
@@ -155,7 +156,7 @@ call nvim_buf_add_highlight(buf, -1, 'Lisa',   5, 15, 16)  " 🎸
 call nvim_buf_add_highlight(buf, -1, 'Yukina', 5, 20, 21)  " 🎤
 call nvim_buf_add_highlight(buf, -1, 'Sayo',   5, 26, 27)  " 🎸
 " ASCII 图部分统一使用 RoseliaArt
-for l in range(9, 26)
+for l in range(7, 26)
   call nvim_buf_add_highlight(buf, -1, 'RoseliaTitle', l, 0, -1)
 endfor
 
@@ -180,30 +181,6 @@ call nvim_buf_add_highlight(buf, -1, 'RoseliaFooter', 27, 0, -1)
   " 绑定 <ESC>/<CR> 关闭浮窗
   call nvim_buf_set_keymap(buf, 'n', '<ESC>', ':bd!<CR>', {'silent': v:true})
   call nvim_buf_set_keymap(buf, 'n', '<CR>', ':bd!<CR>', {'silent': v:true})
-endfunction
-
-function! RandomPickOnBufRead(...)  " 支持可选参数
-  let folder = expand('$HOME/.config/nvim/themes/BanGDream_vim_theme/Roselia_background')
-  let files = split(globpath(folder, '*'), '\n')
-  let count = len(files)
-
-  if count == 0
-    echom "📂 目标文件夹为空"
-    return
-  endif
-
-  " 判断是否传入参数
-  if a:0 > 0 && a:1 == 1
-    let picked = files[0]
-    echom "🎭 回到默认背景: " . fnamemodify(picked, ':t')
-  else
-    let rand = rand() % count
-    let picked = files[rand]
-    echom "🎲 随机选中背景: " . fnamemodify(picked, ':t')
-  endif
-
-  let link_cmd = 'ln -sf "' . picked . '" ~/.config/wezterm/background.jpg'
-  call system(link_cmd)
 endfunction
 
 function! RandomPickOnBufRead(...)
