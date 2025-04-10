@@ -166,18 +166,26 @@ if "$WEZTERM_LINK" --version >/dev/null 2>&1; then
 else
   echo "❌ wezterm 执行失败，AppImage 可能有问题"
 fi
-
 mkdir -p ~/.local/share/fonts
 cd ~/.local/share/fonts
 
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip -O JetBrainsMono.zip
-
-if file JetBrainsMono.zip | grep -q "Zip archive data"; then
-  unzip JetBrainsMono.zip
-  rm JetBrainsMono.zip
-  fc-cache -fv
-  echo "✅ Nerd Font 安装成功"
+# 如果已经存在 JetBrainsMono 字体就跳过
+if ls JetBrainsMono-*.ttf >/dev/null 2>&1; then
+  echo "✅ Nerd Font 已安装，跳过下载"
 else
-  echo "❌ 下载的 JetBrainsMono.zip 不是有效的 zip 文件，请检查网络或链接"
-  rm -f JetBrainsMono.zip
+  echo "🌐 正在下载安装 JetBrainsMono Nerd Font..."
+
+  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip -O JetBrainsMono.zip
+
+  if file JetBrainsMono.zip | grep -q "Zip archive data"; then
+    unzip JetBrainsMono.zip
+    rm JetBrainsMono.zip
+    fc-cache -fv
+    echo "✅ Nerd Font 安装成功"
+  else
+    echo "❌ 下载的 JetBrainsMono.zip 不是有效的 zip 文件，请检查网络或链接"
+    rm -f JetBrainsMono.zip
+  fi
 fi
+
+

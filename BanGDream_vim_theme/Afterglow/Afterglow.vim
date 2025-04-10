@@ -146,8 +146,8 @@ function! DisplayAfterglowLogo()
 call nvim_buf_add_highlight(buf, -1, 'AfterglowTitle', 0, 0, -1)
 
 " 第 1 行：成员名字
-call nvim_buf_add_highlight(buf, -1, 'Tsugumi', 1, 0,28)
-call nvim_buf_add_highlight(buf, -1, 'Tomoe',   1, 28, 64)
+call nvim_buf_add_highlight(buf, -1, 'Tsugumi', 1, 0,32)
+call nvim_buf_add_highlight(buf, -1, 'Tomoe',   1, 32, 64)
 
 " 第 2 行：乐器 emoji
 call nvim_buf_add_highlight(buf, -1, 'Tsugumi', 2, 16, 17)  " 🎹
