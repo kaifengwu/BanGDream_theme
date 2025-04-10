@@ -47,8 +47,9 @@ local vertical = pos[1] or "Bottom"
 local horizontal = pos[2] or "Right"
 
 return {
-
   font_size = 16.0,
+  enable_tab_bar = false,
+
   
 font = wezterm.font_with_fallback {
   "JetBrainsMono Nerd Font",

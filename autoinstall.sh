@@ -52,26 +52,39 @@ echo "📝 准备将 BanGDream 主题指令写入 $INIT_VIM"
 
 # 要插入的配置内容
 read -r -d '' ROSALIA_CONFIG << 'EOF'
-" 🌙 加载 BanGDream Lua 模块
-lua require("BanGDream.Roselia")
-"lua require("BanGDream.Poppin")
+"BanGDream_Config
+" ===== 🌟 BanGDream Theme Selector =====
+let g:bangdream_theme = "Roselia"   " ← 可设为 Roselia,Poppin,Afterglow(设置为空则没有主题)
 
-
-"Roselia
-command! RoseliaTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia.vim
-autocmd VimEnter * RoseliaTheme
-autocmd VimEnter * call DisplayRoseliaLogo()
-
-"Poppin'Party
-"command! PoppinPartyTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Poppin/Poppin.vim
-"autocmd VimEnter * PoppinPartyTheme 
-"autocmd VimEnter * call DisplayPoppinLogo()
+" 🌙 加载 BanGDream 模块
+if g:bangdream_theme ==# 'Roselia'
+  " 🌹 Roselia
+  lua require("BanGDream.Roselia")
+  command! RoseliaTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Roselia/Roselia.vim
+  autocmd VimEnter * RoseliaTheme
+  autocmd VimEnter * call DisplayRoseliaLogo()
+elseif g:bangdream_theme ==# 'Poppin'
+  " ⭐ Poppin'Party
+  lua require("BanGDream.Poppin")
+  command! PoppinPartyTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Poppin/Poppin.vim
+  autocmd VimEnter * PoppinPartyTheme
+  autocmd VimEnter * call DisplayPoppinLogo()
+elseif g:bangdream_theme ==# 'Afterglow'
+  " 🌇 Afterglow
+  lua require("BanGDream.Afterglow")
+  command! AfterglowTheme source ~/.config/nvim/themes/BanGDream_vim_theme/Afterglow/Afterglow.vim
+  autocmd VimEnter * AfterglowTheme
+  autocmd VimEnter * call DisplayAfterglowLogo()
+endif
 
 
 " 主题设置
-autocmd VimEnter * call RandomPickOnBufRead()
-autocmd VimLeavePre * call RandomPickOnBufRead(1)
-nnoremap <leader>c :call RandomPickOnBufRead(2)<CR>
+if g:bangdream_theme ==# 'Roselia' || g:bangdream_theme ==# 'Poppin' || g:bangdream_theme ==# 'Afterglow'
+	autocmd VimEnter * call RandomPickOnBufRead()
+	autocmd VimLeavePre * call RandomPickOnBufRead(1)
+	nnoremap <leader>c :call RandomPickOnBufRead(2)<CR>
+endif
+"BanGDream_Config_end
 EOF
 
 # 检查是否已存在这些内容（用关键词判断）

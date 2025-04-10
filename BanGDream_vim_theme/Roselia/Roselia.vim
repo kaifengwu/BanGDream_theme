@@ -74,17 +74,17 @@ highlight Number       guifg=#DD0088 " 数字，例如 1, 2.5, 3.14 等
 highlight Boolean      guifg=#DD0088 " 布尔值，例如 True, False
 
 " Roselia（#c8boe3）
-highlight PreProc      guifg=#A98AD8 " 预处理指令，例如 #include, #define 等
-highlight Todo         guifg=#A98AD8 " 待办事项，例如 TODO, FIXME 等
-highlight WarningMsg   guifg=#A98AD8 " 警告信息，例如编译器警告
-highlight vimMapRhs     guifg=#A98AD8 
-highlight vimMaplhs     guifg=#A98AD8 
-highlight vimUsrCmd     guifg=#A98AD8 
-highlight vimSetEqual   guifg=#A98AD8 
+highlight PreProc      guifg=#3344AA " 预处理指令，例如 #include, #define 等
+highlight Todo         guifg=#3344AA " 待办事项，例如 TODO, FIXME 等
+highlight WarningMsg   guifg=#3344AA " 警告信息，例如编译器警告
+highlight vimMapRhs     guifg=#3344AA 
+highlight vimMaplhs     guifg=#3344AA 
+highlight vimUsrCmd     guifg=#3344AA 
+highlight vimSetEqual   guifg=#3344AA 
 
 
-highlight TSDelimiter    guifg=#66ff66 " 语法树分隔符，例如逗号, 分号, 括号等
-highlight TSConstructor  guifg=#66ff66 " 语法树构造器，例如类, 函数等
+highlight TSDelimiter    guifg=#3344AA " 语法树分隔符，例如逗号, 分号, 括号等
+highlight TSConstructor  guifg=#3344AA " 语法树构造器，例如类, 函数等
 
 
 function! DisplayRoseliaLogo()

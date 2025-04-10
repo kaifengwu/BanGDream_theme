@@ -50,7 +50,7 @@ function _G.ShowRoseliaColor()
 		["#DD2200"] = { name = "Lisa", hl = "RoseliaLisa", hex = "#DD2200" },
 		["#BBBBBB"] = { name = "Rinko", hl = "RoseliaRinko", hex = "#BBBBBB" },
 		["#DD0088"] = { name = "Ako", hl = "RoseliaAko", hex = "#DD0088" },
-		["#A98AD8"] = { name = "Roselia", hl = "Roselia", hex = "#A98AD8" },
+		["#3344AA"] = { name = "Roselia", hl = "Roselia", hex = "#3344AA" },
 	}
 
 	for _, info in pairs(roselia_colors) do
@@ -113,7 +113,8 @@ function _G.ShowRoseliaColor()
 		Sayo = "Sayo",
 		Lisa = "Lisa",
 		Rinko = "Rinko",
-		Ako = "Ako"
+		Ako = "Ako",
+		Roselia = "Roselia"
 	}
 
 	local config_file = os.getenv("HOME") .. "/.config/nvim/themes/BanGDream_vim_theme/sticker.conf"
