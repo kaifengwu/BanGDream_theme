@@ -35,12 +35,12 @@ if not test -d $folder
     echo "❌ 目录不存在: $folder"
     exit 1
 end
+
 set folder (string trim -- $folder)
 
 # ===== -c 模式：先转换为 png，再高清化 =====
 if test $convert_mode -eq 1
     echo "🔁 进入 waifu2x 转换模式"
-
     # 转换 jpg/jpeg 为 png
     for img in $folder/*.jpg $folder/*.jpeg
         if test -e $img
@@ -57,6 +57,10 @@ if test $convert_mode -eq 1
 
     # 高清化所有 PNG，输出为 *_convert.png
     for img in $folder/*.png
+		if test (stat -c%s $img) -gt 2097152
+			echo "⏭️ 文件过大跳过: $img"
+			continue
+		end
         if test -e $img
             set output (string replace -r '\.png$' '_convert.png' -- $img)
             if test "$img" = "$output"

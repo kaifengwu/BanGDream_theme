@@ -1,6 +1,6 @@
-" ========== 🌄 Morfonica 主题设定 ==========
+" ========== 🦋 Morfonica 主题设定 ==========
 
-" 🌄 自动加载 Morfonica 配色
+" 🦋 自动加载 Morfonica 配色
 colorscheme industry
 hi Normal guibg=#1a1c2c guifg=#cdd6f4
 "set background=dark
@@ -49,7 +49,7 @@ augroup MorfonicaCursorLine
 augroup END
 
 
-" 🌄 Morfonica 应援色代码高亮
+" 🦋 Morfonica 应援色代码高亮
 " Mashiro
 highlight Keyword      guifg=#EE7744 gui=bold " 关键字，例如 if, else, for 等
 highlight Statement    guifg=#EE7744 " 语句，例如 return, break, continue 等
@@ -92,39 +92,46 @@ function! DisplayMorfonicaLogo()
 
   " 内容文本
   let lines = [
-        \ "														═══════════════🌄 Morfonica 🌄 ═══════════════",
-        \ "																 羽沢 つぐみ      宇田川 巴",
-		\ "																	🎹				  🥁",
-		\ " ",
-        \ "															上原 ひまり    美竹 蘭		青葉 モカ",
-		\ "															   🎸			 🎤				🎸",
+        \ "														═══════════════🦋 Morfonica 🦋 ═══════════════",
+        \ "																   広町 七深      二葉 つくし",
+		\ "															🦋		  🎸			  🥁            🦋",
+		\ "																	🦋																					",
+        \ "															八潮 瑠唯   倉田 ましろ		桐ケ谷 透子",
+		\ "															   	🎻		 🦋🎤		🦋	🎸",
         \ "														══════════════════════════════════════════════",
-        \ "														   🌄 Welcome to the world of Morfonica! 🌄",
-		\ "															       ~写~代~码~要~加~油~哦~!",
+        \ "														   🦋 Welcome to the world of Morfonica! 🦋",
+		\ "																		向后全速前进！",
         \ "",
-		\ "                                                        .lxkdc.                                                                                       ",
-		\ "                                                    'xNWK  xNO;                                            ..                                         ",
-		\ "                              ..':lllc,            dNWK     lWX                                          'kNWXo                                       ",
-		\ "                             .c0NN:  xWWNo        .0WW:                                                  dNWN, NO                                     ",
-		\ "                          :ONWK      0WWWo      'XWWl                                                  kWWX  .NN.                                     ",
-		\ "                        :KWWX.       kWWWK     'XWWO     .oxl                                        .0WW0  .0W.                                      ",
-		\ "                      ,0WWW;         kWWWX     0WWX     ;XWN.   .                 :;                 OWWx  :XX     ..                                 ",
-		\ "                    dNWWK           OWWWO    dWWWd..';oNWWOloooc.,loo;   c'..';dKN'   .coodkd,     xWWK;c0X    ;oONNo    .:c'   .     ...             ",
-		\ "                   .0WWWd           .XWWWXO0KXWWWWWWNNWWWN'     lXWx.ON' oWWNNWWWK    xWWWX.cNWk   ,NWWKXK   .oXWWXXWNc  cNWN.  :0O,  oWWX.           ",
-		\ "                  ;XWWW.            :NWWNc  :WWWK    xNWN'    .OWWXx0X. 'XWo,OWWd    xWWWl   xWX. .0WWX.    ;KWWk  oWWXOKWWX   oNWN. .KWWX            ",
-		\ "                 cNWWN,             kWWW0   oWWW.   :WWWc    cKWWX     :XW; OWWx   cKWWWX  .oNWX:kWWWN, .'oKWWWX,.dNWN OWWN. .OWWN  '0WW0             ",
-		\ "                cNWWN.             .NWWW:  .NWWX    0WWN. 'oK:.NWO...c0Nc  .KWNo,oXNx:kKXxxO0NWWNd 'NWNXNWx ;NWNXNWNd  cWWK:dNWWWo'xNWN.              ",
-		\ "               :NWWN'              xWWWK   lWWW0    cNWWXNWWk::xNWNNWWNOdxxkXWWWWWWXOOkOKK0k0WWWXkxxONWWWOolclONWNO:...,KWWWX:  KNWWN;                ",
-		\ "              ;NWWWc         .'', ,XWWWKodkXWWWNKKXXNNWWWWWNNNNNNXXKK00kk;           .dKWWWWWX              .kO0KKXNNNNNNWWWXkkkOXNXxl:;'...,'        ",
-		\ "             ;NNNWO. ..',cloxk0KXNNNNNWWWNNNXK0Ox.                                  ;kXWN0xNK                                 'O0KNNWWWWWWNNX0c       ",
-		\ "        ....lXNNNNXKXNNWWWWNNX, 'KNNNNo                                           :KNNN' ,KX                               .,codkOKNNXK               ",
-		\ " ..';ldk0KNWNNNNNNWWNK'         .KNNNX                                           dNNNO  :XX                            :x0NWWNNNWWNX0Okkkkkkkkkxxxdol:",
-		\ ".0NNWNNNNNNNNNNNX.             .0NNNN;                                           ;NNNxo0N:                             oNNNX0:              .O0KXNNNNW",
-		\ " XNNNNNNXKXNNNNN'              kNNNNK                                                                                                                 ",
-		\ "  :K'    ;XNNNNK.             dNNNNX.                                                                                                                 ",
-		\ "        .KNNNNNO              :KNNX.                                                                                                                  ",
-		\ "         KNNNNN.                                                                                                                                      ",
-		\ "           ;oo.                                                                                                                                       ",
+		\ "                                                                                  .....                             .':c;							", 
+		\ "                                                                                .,::'..;:,.                        .:cc:c'                           ",  
+		\ "                                                                               '::'     .;c:.                     .:cccc,                            ",  
+		\ "                                                                             .,;;.      .:clc.                    ;:::c:;        '.                  ",  
+		\ "                                                                            .;:;.       ,cccc,         ...,,;;,'..:::::'         ',.                 ",  
+		\ "                                                                           .:::'         .,,.        .,;;,cccccc:;:::::,..              .'           ",  
+		\ "                                                                           ;::;                       ....,ccccc:::::::;;,,.                         ",  
+		\ "                                    .':l;.                                ':c:.                             ..';;;;;.   ..                   ..      ",  
+		\ "           ......                  'll:                                   :cc,                                .;;;,.                                 ",  
+		\ "       ..',,'..',,.              .col.                                   ;ccc.                                 .;;.                                  ", 
+		\ "      ':'.      ;;;.            'ooo,                                    :cc:                                                                        ",  
+		\ "     ;c.        ,;;;          .coool        ...                         .ccc'          ....                         .                                ",  
+		\ "     ,:.   ..  .';::'        'clooo'     ''.,;;;,      .,::;  .,,.     .clll        .''',:::'      .'::   .,cc'    .::.       ..'''''.      .';::;'  ",  
+		\ "      .....   .'.;:c:      .:;.:oo;   .,.     ,;;'   .:lllc;...,,'   ':ooooc      .'.    .:::,   .'';:' ';';llc.   ,;;      .;;'. .,;;   ....  .:ll, ",  
+		\ "             .'' .:::     ':' .llc   .:.      .;;,  .'.,cll:.       .lodooo:     ',.      '::;  ...:lc;;.  'll;   .;;.    .;;'     ',.   .     .cll. ",  
+		\ "             .'   ;::.   ::.  :ll.  .c:       .,;.     ;cc:.         .ooooooc.  ';'       .::'    ;lll'    col.   ,;;    .;;,              .',;looc  ",  
+		\ "             ,.   '::' .;.   ,ll:  .:c;       .,.     .::'            ooooo'   .;;.       .:.    .clo.    :ol,   .;;.    ,;;.           ';c'.  lol.  ",  
+		\ "            ''    .:::;,    .lll.  ,cc:      .,.     .::;            .oooo.    ';:'      .:.     ,cl.    'llc    ';,    .;::.          :ll.   :oo,   ",  
+		\ "    ..     .;.    .cc:.    .looc   .ccc.    ..       ,c:.            ;lol'     .;:;.   ...      .;;'    .lllc'   ';,...  ;llc.......  .ccc,.'cool:.  ",  
+		\ "     ..''',,,,.    ;.    .;clllc'   .':;;'..        .;;.             ;cc;       .';;;,..        .'.      ::;.     ''.     .,:::;,.     '::;...:c:.   ",  
+		\ "                                                                    .;:;.                                                                            ",  
+		\ "                                                                   .,;;,                                                                             ",  
+		\ "                                                                   ,::;.                                                                             ",  
+		\ "           ..                                     .''.            .:cc                                                                               ",  
+		\ "                                  .,,.           ;::::;.         .llc.                                                                               ",  
+		\ "                ..                .,::, ..      .;::::;.        ,lll.                                                                                ",  
+		\ "                     ...          ,ccc:,::       ':::;.        :ll;                                                                                  ",  
+		\ "                      ...        .ccll:,;'        .';;,.    .';;'.                                                                                   ",  
+		\ "                              .,;clll:'..            ..''..''..                                                                                      ",  
+		\ "                                .,,'.                                                                                                                ",  
         \ "",
         \ "",
         \ ]
@@ -146,7 +153,7 @@ function! DisplayMorfonicaLogo()
 call nvim_buf_add_highlight(buf, -1, 'MorfonicaTitle', 0, 0, -1)
 
 " 第 1 行：成员名字
-call nvim_buf_add_highlight(buf, -1, 'Rui', 1, 0,32)
+call nvim_buf_add_highlight(buf, -1, 'Nanami', 1, 0,32)
 call nvim_buf_add_highlight(buf, -1, 'Tsukushi',   1, 32, 64)
 
 " 第 2 行：乐器 emoji
@@ -154,9 +161,9 @@ call nvim_buf_add_highlight(buf, -1, 'Rui', 2, 16, 17)  " 🎹
 call nvim_buf_add_highlight(buf, -1, 'Tsukushi',   2, 24, 25)  " 🥁
 
 " 第 4 行：下方三人
-call nvim_buf_add_highlight(buf, -1, 'Nanami',   4, 0,30)
-call nvim_buf_add_highlight(buf, -1, 'Mashiro', 4, 30,44)
-call nvim_buf_add_highlight(buf, -1, 'Touko',   4, 44,64)
+call nvim_buf_add_highlight(buf, -1, 'Rui',   4, 0,30)
+call nvim_buf_add_highlight(buf, -1, 'Mashiro', 4, 30,48)
+call nvim_buf_add_highlight(buf, -1, 'Touko',   4, 48,64)
 
 " 第 5 行：下方 emoji
 call nvim_buf_add_highlight(buf, -1, 'Nanami',   5, 15, 16)  " 🎸

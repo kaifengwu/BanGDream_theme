@@ -25,23 +25,23 @@ function _G.ShowMorfonicaColor()
 		["#6677CC"] = "🎤",
 		["#EE6666"] = "🎸",
 		["#EE7744"] = "🎸",
-		["#669988"] = "🎹",
+		["#669988"] = "🎻",
 		["#EE7788"] = "🥁",
-		["Empty"] = "🌄"
+		["Empty"] = "🦋"
 	}
 
 	if fg == "" then
 		fg = "Empty"
 		character = "Morfonica"
-		icon = "🌄"
+		icon = "🦋"
 	else
 		character = color_to_character[fg] or "Morfonica"
-		icon = color_to_icon[fg] or "🌄"
+		icon = color_to_icon[fg] or "🦋"
 	end
 
 	local msg = {
 		"🎨: " .. fg,
-		"🌄: " .. character .. icon,
+		"🦋: " .. character .. icon,
 	}
 
 	local morfonica_colors = {
@@ -179,7 +179,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 	end,
 })
 
--- 🌄 贴纸开关切换模块
+-- 🦋 贴纸开关切换模块
 local M = {}
 
 local config_file = vim.fn.expand("~/.config/nvim/themes/BanGDream_vim_theme/sticker.conf")
