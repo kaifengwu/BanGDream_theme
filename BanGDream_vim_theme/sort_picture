@@ -1,0 +1,124 @@
+#!/usr/bin/env fish
+
+# 判断参数
+if test (count $argv) -lt 1
+    echo "用法: sort_picture.fish [-c] <目录路径> [前缀字符串]"
+    exit 1
+end
+
+set convert_mode 0
+set folder ""
+set prefix ""
+
+
+if test "$argv[1]" = "-c"
+    set convert_mode 1
+    set folder $argv[2]
+	set prefix (basename (echo $folder |  tr -d '/'))
+    if test (count $argv) -ge 3
+        set prefix $argv[3]
+    end
+else
+    set folder $argv[1]
+	set prefix (basename (echo $folder |  tr -d '/'))
+    if test (count $argv) -ge 2
+        set prefix $argv[2]
+    end
+end
+
+if test (count $argv) -eq 3
+    set prefix $argv[3]
+end
+
+# 校验目录
+if not test -d $folder
+    echo "❌ 目录不存在: $folder"
+    exit 1
+end
+set folder (string trim -- $folder)
+
+# ===== -c 模式：先转换为 png，再高清化 =====
+if test $convert_mode -eq 1
+    echo "🔁 进入 waifu2x 转换模式"
+
+    # 转换 jpg/jpeg 为 png
+    for img in $folder/*.jpg $folder/*.jpeg
+        if test -e $img
+            set output (string replace -r '\.(jpg|jpeg)$' '.png' -- $img)
+            ffmpeg -y -i $img $output >/dev/null 2>&1
+            if test $status -eq 0
+                rm $img
+                echo "📸 已转为 PNG: $output"
+            else
+                echo "⚠️ 转换失败: $img"
+            end
+        end
+    end
+
+    # 高清化所有 PNG，输出为 *_convert.png
+    for img in $folder/*.png
+        if test -e $img
+            set output (string replace -r '\.png$' '_convert.png' -- $img)
+            if test "$img" = "$output"
+                continue
+            end
+            waifu2x-ncnn-vulkan -i $img -o $output -n 1 -s 2 >/dev/null 2>&1
+            if test $status -eq 0
+                echo "✨ 高清完成: $output"
+            else
+                echo "⚠️ 高清失败: $img"
+            end
+        end
+    end
+
+    # 清除原始 png，只保留 *_convert.png，并去掉 _convert 后缀
+    for img in $folder/*_convert.png
+        set original (string replace '_convert.png' '.png' -- $img)
+        mv $img $original
+    end
+
+    echo "✅ 转换完成"
+end
+
+# ===== 执行统一重命名流程 =====
+
+# 查找最大编号
+set max_index 0
+for file in (ls -1 $folder)
+    set base "$prefix"_
+    set pattern "^"$base"[0-9]+\\.[^./]+"
+    if string match -rq $pattern $file
+        set num (string replace -r "^$base" "" -- $file | string replace -r '\\..*' '')
+        if test "$num" -gt "$max_index"
+            set max_index $num
+        end
+    end
+end
+
+set i (math $max_index + 1)
+
+# 遍历未命名文件
+for file in (ls -1 $folder | sort)
+    set full_path "$folder/$file"
+    if not test -f $full_path
+        continue
+    end
+
+    set base "$prefix"_
+    set pattern "^"$base"[0-9]+\\.[^./]+"
+    if string match -rq $pattern $file
+        echo "⏭️ 已命名跳过: $file"
+        continue
+    end
+
+    set ext (string match -r '\.[^./]*$' $file)
+    set new_name "$prefix"_"$i""$ext"
+	set new_path (string trim -- "$folder")"/"(string trim -- "$new_name")
+
+
+    mv $full_path $new_path
+    echo "✅ $file → $new_name"
+
+    set i (math $i + 1)
+end
+

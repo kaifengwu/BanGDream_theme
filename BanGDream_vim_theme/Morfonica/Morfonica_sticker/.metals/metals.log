@@ -1,0 +1,4 @@
+2025.04.13 14:07:28 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/kaifeng/gits/BanGDream_theme/BanGDream_vim_theme/Morfonica/Morfonica_sticker/.metals/lsp.trace.json or /home/kaifeng/.cache/metals/lsp.trace.json[0m
+2025.04.13 14:07:29 INFO  logging to file /home/kaifeng/gits/dotfiles/.metals/metals.log[0m
+2025.04.13 14:09:27 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /home/kaifeng/gits/BanGDream_theme/BanGDream_vim_theme/Morfonica/Morfonica_sticker/.metals/lsp.trace.json or /home/kaifeng/.cache/metals/lsp.trace.json[0m
+2025.04.13 14:09:27 INFO  logging to file /home/kaifeng/gits/dotfiles/.metals/metals.log[0m

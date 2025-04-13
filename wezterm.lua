@@ -42,8 +42,8 @@ end
 
 local show_sticker = lines[1] == "true"
 local sticker_height = lines[2] or "17%"
-local pos = split(lines[3] or "Bottom Right", " ")
-local vertical = pos[1] or "Bottom"
+local pos = split(lines[3] or "Top Right", " ")
+local vertical = pos[1] or "Top"
 local horizontal = pos[2] or "Right"
 
 return {
@@ -54,7 +54,7 @@ return {
 font = wezterm.font_with_fallback {
   "JetBrainsMono Nerd Font",
   --"Noto Sans CJK SC",       -- ✅ 中文 fallback
-  --"WenQuanYi Micro Hei",    -- 适用于 Linux
+  "WenQuanYi Micro Hei",    -- 适用于 Linux
 },
 
 warn_about_missing_glyphs = false,

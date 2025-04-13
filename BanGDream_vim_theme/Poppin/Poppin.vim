@@ -4,16 +4,17 @@
 colorscheme industry
 hi Normal guibg=#1a1c2c guifg=#cdd6f4
 "set background=dark
-hi Normal guibg=NONE ctermbg=NONE guifg=#c8b0e3 " 正常文本
+hi Normal guibg=NONE ctermbg=NONE guifg=#FF3377 " 正常文本
 hi CursorLine guibg=NONE " 当前行
-hi NormalNC guibg=NONE ctermbg=NONE guifg=#c8b0e3 " 非活动窗口的正常文本
-hi Pmenu guibg=NONE guifg=#c8b0e3 ctermbg=NONE " 弹出菜单
-hi PmenuSel guibg=#c8b0e3 guifg=#0077DD ctermbg=NONE " 弹出菜单选中项
-highlight CocFloating guibg=NONE guifg=#c8b0e3
-highlight CocMenuSel guibg=#FF5522 guifg=#FF55BB gui=bold
+hi NormalNC guibg=NONE ctermbg=NONE guifg=#FF3377 " 非活动窗口的正常文本
+hi Pmenu guibg=NONE guifg=#FF3377 ctermbg=NONE " 弹出菜单
+hi PmenuSel guibg=#FF3377 guifg=#0077DD ctermbg=NONE " 弹出菜单选中项
+highlight CocFloating guibg=NONE guifg=#FF5522
+highlight CocMenuSel guibg=#0077DD guifg=#FF55BB gui=bold
 set winblend=0
 highlight NonText guibg=NONE " 非文本字符
 highlight EndOfBuffer guibg=NONE " 缓冲区末尾
+
 
 
 " 清除已有 match
